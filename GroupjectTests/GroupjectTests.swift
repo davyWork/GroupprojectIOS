@@ -5,7 +5,7 @@
 //  Created by davy ngoma mbaku on 7/19/20.
 //  Copyright © 2020 davyngoma. All rights reserved.
 //
-
+/*
 import XCTest
 @testable import Groupject
 
@@ -32,3 +32,4 @@ class GroupjectTests: XCTestCase {
     }
 
 }
+*/
