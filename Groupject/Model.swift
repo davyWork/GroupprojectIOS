@@ -22,6 +22,19 @@ class Model {
         var category: String //categories consist of Announcement or Essential
     }
     
+    
+    var arrayIndex: Int = 0
+    
+    
+    static let sharedInstance = Model() //obtain reference to the singleton
+    
+    
+    private init () {
+        //prevent unauthorized initialization & prevents overriding at init
+    }
+    
+    
+    
     //create the default announcements in the array:
     private var announcementsArray: [Announcement] =
         [Announcement(title: "12 Steps",
@@ -161,7 +174,7 @@ class Model {
                       category: "Essential"),
          
          Announcement(title: "12 Step Class Signups",
-                      description: "Sign up for the 12 step classes. Starting February 4th, 2020. This is a great opportuinty to dig deeper into your recovery and find the rot issues that are making life unmanagable for you. The classes follow 4 workbooks as a guide. You can purchase these workbooks as a set for $20, which you can write in and use over and over again, should you choose to retake the class in the future, which many people do.",
+                      description: "Sign up for the 12 step classes. Starting February 4th, 2020. This is a great opportuinty to dig deeper into your recovery and find the root issues that are making life unmanagable for you. The classes follow 4 workbooks as a guide. You can purchase these workbooks as a set for $20, which you can write in and use over and over again, should you choose to retake the class in the future.",
                       date: "02-04-2020",
                       location: nil,
                       contactPerson: "Jackie",
@@ -170,7 +183,7 @@ class Model {
                       category: "Announcement"),
          
          Announcement(title: "CR Thanksgiving",
-                      description: "Celebrate Recovery invites you ad your immediate family to break bread with us and to celebrate the goodness of God at our annual Thanksgiving Fellowship Dinner. We'll provide the traditional turkey fixins' and fun. You provide the dessert, bottled water or canned sodas.",
+                      description: "Celebrate Recovery invites you and your immediate family to break bread with us and to celebrate the goodness of God at our annual Thanksgiving Fellowship Dinner. We'll provide the traditional turkey fixins' and fun. You provide the dessert, bottled water or canned sodas.",
                       date: "02-04-2020",
                       location: """
                         Miami Vineyard Community Church
@@ -192,7 +205,32 @@ class Model {
                       announcer: "Rosie",
                       timeLimit: 5.00,
                       category: "Announcement"),
-
-    ]
+    ] //end of array sample announcements
+    
+    
+    
+    //when displaying the announcements in the Announcement Library, they should be sorted first
+    private func sortArray() {
+        //sort all the entries
+        announcementsArray.sort{
+            $0.title < $1.title
+        }
+    }
+    
+    
+    //find the index of the announcement title the user is searching for
+    func searchByTitle(searchingForTitle: String) -> Int{
+            if let announcementIndex = announcementsArray.index(where: {$0.title == searchingForTitle}) { //get index of array entry that matches name of user-entered entry
+                arrayIndex = announcementIndex //if found, return the index where title was found
+            } else { //not found
+                arrayIndex = -1
+        }
+            return arrayIndex
+    }
+    
+    
+    
+    //update an existing announcement after the user edits it
+    
     
 }
