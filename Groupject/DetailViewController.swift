@@ -9,7 +9,8 @@
 import UIKit
 
 class DetailViewController: UIViewController {
-
+    var index: Model.Announcement?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

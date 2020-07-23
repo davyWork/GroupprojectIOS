@@ -36,7 +36,7 @@ class Model {
     
     
     //create the default announcements in the array:
-    private var announcementsArray: [Announcement] =
+     var announcementsArray: [Announcement] =
         [Announcement(title: "12 Steps",
                       description: """
             1. We admitted we were powerless over our addictions and compulsive behaviors, that our lives had become unmanageable.
