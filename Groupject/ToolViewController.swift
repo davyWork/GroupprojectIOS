@@ -9,45 +9,48 @@
 import UIKit
 
 class ToolViewController: UIViewController {
-    @IBOutlet weak var searchField: UITextField!
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var createNewqButton: UIButton!
     @IBOutlet weak var tableVIew: UITableView!
+    var selectedIndexPath: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableVIew.delegate = self
         tableVIew.dataSource = self
         tableVIew.tableFooterView = UIView()
-        searchField.delegate = self
+        searchBar.delegate = self
         // Do any additional setup after loading the view.
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        searchField.text = ""
-        searchField.resignFirstResponder()
+        //set filter data
+        Model.sharedInstance.sortArray()
+        Model.sharedInstance.isFilter = false
+        searchBar.placeholder = "Search By title"
+        Model.sharedInstance.filterData = Model.sharedInstance.announcementsArray
+        Model.sharedInstance.sortFilter()
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let selectedIndexPath = selectedIndexPath {
+            tableVIew.deselectRow(at: selectedIndexPath, animated: true)
+        }
     }
-    */
+    
     @IBAction func createNewButton(_ sender: UIButton) {
         
     }
-    
 }
 
 
 extension ToolViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //use the array from core data once core data added
+        if Model.sharedInstance.isFilter == true && searchBar.text != "" {
+            return  Model.sharedInstance.filterData.count
+        }
         return Model.sharedInstance.announcementsArray.count
     }
     
@@ -55,33 +58,59 @@ extension ToolViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? CustomToolTableViewCell else {
             return UITableViewCell()
         }
+        if Model.sharedInstance.isFilter == true && searchBar.text != "" {
+            let index =  Model.sharedInstance.filterData[indexPath.row]
+            cell.bind(label1: index.title ?? "", label2: index.announcer ?? "")
+            return cell
+        }
         let index = Model.sharedInstance.announcementsArray[indexPath.row]
-        
-        cell.bind(label1: index.title, label2: index.announcer ?? "")
+        cell.bind(label1: index.title ?? "", label2: index.announcer ?? "")
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        let index = Model.sharedInstance.announcementsArray[indexPath.row]
-       let vc = DetailViewController()
-        vc.index = index
-       present(vc, animated: true, completion: nil)
+        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
+            viewController.index = DetailViewModel(value: index, indexPath: indexPath.row)
+            selectedIndexPath = indexPath
+            if let navigator = navigationController {
+                navigator.pushViewController(viewController, animated: true)
+            }
+        }
     }
 }
 
-extension ToolViewController: UITextFieldDelegate {
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = nil
-        searchBar.resignFirstResponder()
-    }
-    
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        guard let textFieldInfo = textField.text,  !textFieldInfo.isEmpty, textFieldInfo != "" else {
+extension ToolViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let textFieldInfo = searchBar.text,  !textFieldInfo.isEmpty, textFieldInfo != "" else {
+            //reset
+            Model.sharedInstance.isFilter = false
+            Model.sharedInstance.sortArray()
+            tableVIew.reloadData()
             return
         }
-        
+        //filter result
+        Model.sharedInstance.isFilter = true
+        Model.sharedInstance.filterData = Model.sharedInstance.announcementsArray.filter {
+            return ($0.title?.lowercased() as AnyObject).contains(textFieldInfo.lowercased())
+        }
+        Model.sharedInstance.sortFilter()
         tableVIew.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        tableVIew.reloadData()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+        super.touchesBegan(touches, with: event)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        searchBar.endEditing(true)
     }
 }
 
