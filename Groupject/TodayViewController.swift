@@ -10,30 +10,136 @@ import UIKit
 
 class TodayViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var segementController: UISegmentedControl!
+    var selectedIndexPath: IndexPath?
+    enum Sections: Int, CaseIterable {
+        case Annoucement = 0
+        case essentials = 1
+    }
+    
+    var essentials: [Model.Announcement]? {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
+    var annoucement: [Model.Announcement]? {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view, typically from a nib.
+        tableView.delegate = self
+        tableView.dataSource = self
+        let nib = UINib(nibName: "ReuseCell", bundle: nil)
+        segementController.selectedSegmentIndex = 0
+        tableView.register(nib, forCellReuseIdentifier: "cell")
     }
-
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+        tableView.tableFooterView = UIView()
+        if segementController.selectedSegmentIndex == 0 {
+            annoucement = Model.sharedInstance.dataByCategories(category: .annoucement)
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let selectedIndexPath = selectedIndexPath {
+            tableView.deselectRow(at: selectedIndexPath, animated: true)
+        }
+    }
+    
+    @IBAction func segmentAction(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            annoucement = Model.sharedInstance.dataByCategories(category: .annoucement)
+        case 1:
+            essentials = Model.sharedInstance.dataByCategories(category: .essentials)
+        default:
+            break;
+        }
+    }
 }
 
-//extension TodayViewController: UITableViewDelegate, UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return 0
+extension TodayViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch segementController.selectedSegmentIndex {
+        case 0:
+            return annoucement?.count ?? 0
+        case 1:
+            return essentials?.count ?? 0
+        default: return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? CustomToolTableViewCell else {
+            return UITableViewCell()
+        }
+        switch segementController.selectedSegmentIndex {
+        case 0:
+            let index = annoucement?[indexPath.row]
+            cell.bind(label1: index?.title ?? "", label2: index?.announcer ?? "")
+        case 1:
+            let index = essentials?[indexPath.row]
+            cell.bind(label1: index?.title ?? "", label2: index?.announcer ?? "")
+        default: return CustomToolTableViewCell()
+        }
+        return cell
+    }
+    
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            switch segementController.selectedSegmentIndex {
+//            case 0:
+//                //delete in database
+//                annoucement?.remove(at: indexPath.row)
+//                let item = annoucement?[indexPath.row]
+//                Model.sharedInstance.delele(item: item)
+//                //delete in the tableView
+//                tableView.deleteRows(at: [indexPath], with: .fade)
+//            case 1:
+//                //delete in database
+//                essentials?.remove(at: indexPath.row)
+//                let item = essentials?[indexPath.row]
+//                Model.sharedInstance.delele(item: item)
+//                //delete in the tableView
+//                tableView.deleteRows(at: [indexPath], with: .fade)
+//            default: break
+//            }
+//        }
 //    }
-//
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return 2
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var index: Model.Announcement?
+        switch segementController.selectedSegmentIndex {
+        case 0:
+            index = annoucement?[indexPath.row]
+        case 1:
+             index = essentials?[indexPath.row]
+        default:
+            break;
+        }
+        guard let _index = index else {
+            return
+        }
+        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
+            viewController.index = DetailViewModel(value: _index, indexPath: indexPath.row)
+            selectedIndexPath = indexPath
+            if let navigator = navigationController {
+                navigator.pushViewController(viewController, animated: true)
+            }
+        }
+    }
+    
+//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//        return true
 //    }
-//    
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        //TODO cell
-//    }
-//
-//}
+}
 
 

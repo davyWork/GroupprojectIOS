@@ -19,7 +19,6 @@ class CustomToolTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
     
@@ -27,5 +26,4 @@ class CustomToolTableViewCell: UITableViewCell {
         self.label1.text = label1
         self.label2.text = label2
     }
-
 }

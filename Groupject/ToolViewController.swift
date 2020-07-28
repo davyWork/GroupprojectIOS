@@ -21,16 +21,19 @@ class ToolViewController: UIViewController {
         tableVIew.tableFooterView = UIView()
         searchBar.delegate = self
         // Do any additional setup after loading the view.
+        let nib = UINib(nibName: "ReuseCell", bundle: nil)
+        tableVIew.register(nib, forCellReuseIdentifier: "cell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         //set filter data
-        Model.sharedInstance.sortArray()
+        Model.sharedInstance.sortData(by: .display)
         Model.sharedInstance.isFilter = false
         searchBar.placeholder = "Search By title"
         Model.sharedInstance.filterData = Model.sharedInstance.announcementsArray
-        Model.sharedInstance.sortFilter()
+        Model.sharedInstance.sortData(by: .filter)
+        tableVIew.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -41,7 +44,11 @@ class ToolViewController: UIViewController {
     }
     
     @IBAction func createNewButton(_ sender: UIButton) {
-        
+        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Create") as? CreateNewViewController {
+            if let navigator = navigationController {
+                navigator.pushViewController(viewController, animated: true)
+            }
+        }
     }
 }
 
@@ -85,7 +92,7 @@ extension ToolViewController: UISearchBarDelegate {
         guard let textFieldInfo = searchBar.text,  !textFieldInfo.isEmpty, textFieldInfo != "" else {
             //reset
             Model.sharedInstance.isFilter = false
-            Model.sharedInstance.sortArray()
+            Model.sharedInstance.sortData(by: .display)
             tableVIew.reloadData()
             return
         }
@@ -94,7 +101,7 @@ extension ToolViewController: UISearchBarDelegate {
         Model.sharedInstance.filterData = Model.sharedInstance.announcementsArray.filter {
             return ($0.title?.lowercased() as AnyObject).contains(textFieldInfo.lowercased())
         }
-        Model.sharedInstance.sortFilter()
+        Model.sharedInstance.sortData(by: .filter)
         tableVIew.reloadData()
     }
     

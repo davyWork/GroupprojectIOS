@@ -36,7 +36,7 @@ class DetailViewController: UIViewController {
                 textFieldEditing(isEditingFiled)
             }
             
-            if  isEditingFiled == false {
+            if isEditingFiled == false {
                 textFieldEditing(isEditingFiled)
             }
         }
@@ -45,22 +45,25 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fields = [
-            filed2,
-            filed3,
-            filed4,
-            filed5]
+        self.title = "Details"
+        //set the array of textfield
+        fields = [filed2, filed3, filed4, filed5]
+        //loop to conform to delegate
         fields.forEach {
             $0.delegate = self
         }
         field1.delegate = self
+        buttonSetUp()
+    }
+    
+    //button UI
+    func buttonSetUp() {
         copyButton.layer.cornerRadius = 5
         copyButton.layer.borderColor = UIColor.white.cgColor
         copyButton.layer.borderWidth = 3
         editButton.layer.cornerRadius = 5
         editButton.layer.borderWidth = 3
         editButton.layer.borderColor = UIColor.white.cgColor
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,12 +75,11 @@ class DetailViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
+        //handle modifying record
         if isEditingFiled == true {
-            resignResponder()
-            guard let index = index?.index else {
-                return
+            if let index = index?.index {
+                Model.sharedInstance.overrideValue(description: descriptionValue, date: date, hours: hours, location: location, contactPerson: contactPerson, timeLimit: timeLimitValue, index: index)
             }
-            Model.sharedInstance.overrideValue(description: descriptionValue, date: date, hours: hours, location: location, contactPerson: contactPerson, timeLimit: timeLimitValue, index: index)
         }
     }
     
@@ -96,6 +98,7 @@ class DetailViewController: UIViewController {
         }
     }
     
+    //display data
     func displayData() {
         timeLimit.text = "\(index?.timeLimit ?? 0)"
         field1.text = index?.field1
