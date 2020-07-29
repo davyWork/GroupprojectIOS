@@ -32,6 +32,7 @@ class Model {
         var timeLimit: Double?
         var category: categories? //categories consist of Announcement or Essential
         var hours: String?
+        var image: UIImage?
     }
     
     var arrayIndex: Int = 0
@@ -91,7 +92,8 @@ class Model {
                       announcer: "Roxy",
                       timeLimit: 5.00,
                       category: categories.essentials,
-                      hours: "08AM - 06PM"),
+                      hours: "08AM - 06PM",
+                      image: nil),
          
          Announcement(title: "8 Principles",
             description: """
@@ -124,7 +126,8 @@ class Model {
             announcer: "Mike",
             timeLimit: 5.00,
             category: categories.essentials,
-            hours: "08AM - 06PM"),
+            hours: "08AM - 06PM",
+            image: nil),
          
          Announcement(title: "Serenity Prayer",
                       description: """
@@ -151,7 +154,8 @@ class Model {
                       announcer: "Vanessa",
                       timeLimit: 5.00,
                       category: categories.essentials,
-                      hours: "08AM - 06PM"),
+                      hours: "08AM - 06PM",
+                      image: nil),
          
          Announcement(title: "Small Group Guidelines",
                       description: """
@@ -184,7 +188,8 @@ class Model {
                       announcer: "Phil",
                       timeLimit: 5.00,
                       category: categories.essentials,
-                      hours: "08AM - 06PM"),
+                      hours: "08AM - 06PM",
+                      image: nil),
          
          Announcement(title: "12 Step Class Signups",
                       description: "Sign up for the 12 step classes. Starting February 4th, 2020. This is a great opportuinty to dig deeper into your recovery and find the root issues that are making life unmanagable for you. The classes follow 4 workbooks as a guide. You can purchase these workbooks as a set for $20, which you can write in and use over and over again, should you choose to retake the class in the future.",
@@ -194,7 +199,8 @@ class Model {
                       announcer: "Jackie",
                       timeLimit: 5.00,
                       category: categories.annoucement,
-                      hours: "08AM - 06PM"),
+                      hours: "08AM - 06PM",
+                      image: nil),
          
          Announcement(title: "CR Thanksgiving",
                       description: "Celebrate Recovery invites you and your immediate family to break bread with us and to celebrate the goodness of God at our annual Thanksgiving Fellowship Dinner. We'll provide the traditional turkey fixins' and fun. You provide the dessert, bottled water or canned sodas.",
@@ -207,7 +213,8 @@ class Model {
                       announcer: "Marie",
                       timeLimit: 5.00,
                       category: categories.annoucement,
-                      hours: "08AM - 06PM"),
+                      hours: "08AM - 06PM",
+                      image: nil),
          
          Announcement(title: "Volunteers Needed",
                       description: "Volunteers needed to chaperone grade school-aged children to the Miami Seaquarium.",
@@ -220,7 +227,8 @@ class Model {
                       announcer: "Rosie",
                       timeLimit: 5.00,
                       category: categories.annoucement,
-                      hours: "08AM - 06PM")
+                      hours: "08AM - 06PM",
+                      image: nil)
     ] //end of array sample announcements
 }
 
@@ -248,32 +256,29 @@ extension Model {
     //TODO not working
     //modified existing value
     //handle nil cases
-    func overrideValue(
-        description: String?,
-        date: String?,
-        hours: String?,
-        location: String?,
-        contactPerson: String?,
-        timeLimit: Double?,
-        index: Int?) {
-        
-        if let _index = index {
-            //check if the value wasnt modifed
-   
-            if description == nil {
-                
-            }
-            
-            
-            
-            let value = announcementsArray[_index]
-            announcementsArray[_index] = Announcement(title: value.title, description: description ?? "", date: date, location: location, contactPerson: contactPerson, announcer: value.announcer, timeLimit: timeLimit ?? 0, category: value.category, hours: hours ?? "")
-        }
-    }
+//    func overrideValue(
+//        description: String?,
+//        date: String?,
+//        hours: String?,
+//        location: String?,
+//        contactPerson: String?,
+//        timeLimit: Double?,
+//        index: Int?) {
+//
+//        if let _index = index {
+//            //check if the value wasnt modifed
+//
+//            if description == nil {
+//
+//            }
+//            let value = announcementsArray[_index]
+//            announcementsArray[_index] = Announcement(title: value.title, description: description ?? "", date: date, location: location, contactPerson: contactPerson, announcer: value.announcer, timeLimit: timeLimit ?? 0, category: value.category, hours: hours ?? "")
+//        }
+//    }
     
     //TODO
     func addNew(data: Announcement) {
-        //Dont add duplicate
+        announcementsArray.append(data)
     }
     
     //return data by categories

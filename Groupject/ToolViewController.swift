@@ -33,6 +33,7 @@ class ToolViewController: UIViewController {
         searchBar.placeholder = "Search By title"
         Model.sharedInstance.filterData = Model.sharedInstance.announcementsArray
         Model.sharedInstance.sortData(by: .filter)
+        searchBar.resignFirstResponder()
         tableVIew.reloadData()
     }
     
@@ -107,17 +108,14 @@ extension ToolViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
+        searchBar.resignFirstResponder()
+        searchBar.endEditing(true)
         tableVIew.reloadData()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
         super.touchesBegan(touches, with: event)
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        searchBar.endEditing(true)
     }
 }
 

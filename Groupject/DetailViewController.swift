@@ -78,7 +78,7 @@ class DetailViewController: UIViewController {
         //handle modifying record
         if isEditingFiled == true {
             if let index = index?.index {
-                Model.sharedInstance.overrideValue(description: descriptionValue, date: date, hours: hours, location: location, contactPerson: contactPerson, timeLimit: timeLimitValue, index: index)
+//                Model.sharedInstance.overrideValue(description: descriptionValue, date: date, hours: hours, location: location, contactPerson: contactPerson, timeLimit: timeLimitValue, index: index)
             }
         }
     }
