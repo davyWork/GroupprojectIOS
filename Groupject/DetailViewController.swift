@@ -106,6 +106,7 @@ class DetailViewController: UIViewController {
         filed3.text = index?.filed3
         filed5.text = index?.filed4
         filed4.text = index?.filed5
+        logo.image = index?.image
     }
     
     @IBAction func edit(_ sender: UIButton) {

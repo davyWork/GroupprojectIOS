@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class DetailViewModel {
     var timeLimit: Double?
@@ -16,6 +17,7 @@ class DetailViewModel {
     var filed5: String?
     var filed4: String?
     var index: Int?
+    var image: UIImage?
     
     init(value: Model.Announcement, indexPath: Int) {
         self.timeLimit = value.timeLimit
@@ -25,6 +27,7 @@ class DetailViewModel {
         self.filed5  = value.location
         self.filed4  = value.contactPerson
         self.index = indexPath
+        self.image = value.image
     }
 }
 
