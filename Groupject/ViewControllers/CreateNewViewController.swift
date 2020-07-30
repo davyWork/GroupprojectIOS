@@ -56,30 +56,44 @@ class CreateNewViewController: UIViewController {
     }
     
     func handleData() {
-        //get input non null or empty to save
-        guard let _titleValue = titleValue.text,
-            !_titleValue.isEmpty,
-        let _date = date.text,
-            !_date.isEmpty,
-        let _descriptionValue = descriptionValue.text,
-            !_descriptionValue.isEmpty,
-        let _location = location.text,
-            !_location.isEmpty,
-        let _contactPerson = contactPerson.text,
-            !_contactPerson.isEmpty,
-        let _announcer = announcer.text,
-            !_announcer.isEmpty,
-        let _timeLimit = timeLimit.text,
-            !_timeLimit.isEmpty else {
-                return
+        //case saving only title and image
+        if let _titleValue = titleValue.text,
+            let image = imageViewDoc.image, date.text == nil,
+        descriptionValue.text == nil, location.text == nil,
+            contactPerson.text == nil, announcer.text == nil, timeLimit.text == nil {
+            
+            
+        let data = Model.Announcement.init(title: _titleValue, description: nil, date: nil, location: nil, contactPerson: nil, announcer: nil, timeLimit: nil, category: nil, hours: nil, image: image)
+            
+            //save object
+            Model.sharedInstance.addNew(data: data)
+            emptyState()
+        } else {
+            //get input non null or empty to save
+            guard let _titleValue = titleValue.text,
+                !_titleValue.isEmpty,
+                let _date = date.text,
+                !_date.isEmpty,
+                let _descriptionValue = descriptionValue.text,
+                !_descriptionValue.isEmpty,
+                let _location = location.text,
+                !_location.isEmpty,
+                let _contactPerson = contactPerson.text,
+                !_contactPerson.isEmpty,
+                let _announcer = announcer.text,
+                !_announcer.isEmpty,
+                let _timeLimit = timeLimit.text,
+                !_timeLimit.isEmpty else {
+                    return
+            }
+            
+            //create object
+            let data = Model.Announcement.init(title: _titleValue, description: _descriptionValue, date: _date, location: _location, contactPerson: _contactPerson, announcer: _announcer, timeLimit: Double(_timeLimit), category: selectedCategory, hours: nil, image: imageViewDoc.image ?? UIImage())
+            
+            //save object
+            Model.sharedInstance.addNew(data: data)
+            emptyState()
         }
-      
-        //create object
-       let data = Model.Announcement.init(title: _titleValue, description: _descriptionValue, date: _date, location: _location, contactPerson: _contactPerson, announcer: _announcer, timeLimit: Double(_timeLimit), category: selectedCategory, hours: nil, image: imageViewDoc.image ?? UIImage())
-        
-        //save object
-        Model.sharedInstance.addNew(data: data)
-        emptyState()
     }
     
     @IBAction func segmentController(_ sender: UISegmentedControl) {
