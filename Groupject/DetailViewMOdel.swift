@@ -23,7 +23,7 @@ class DetailViewModel {
         self.timeLimit = value.timeLimit
         self.field1  = value.description
         self.filed2  = value.date
-       // self.filed3  = value.timeLimit
+        self.filed3  = value.hours
         self.filed5  = value.location
         self.filed4  = value.contactPerson
         self.index = indexPath
