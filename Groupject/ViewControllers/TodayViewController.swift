@@ -106,7 +106,15 @@ extension TodayViewController: UITableViewDelegate, UITableViewDataSource {
         guard let _index = index else {
             return
         }
-        guard let imageCheck = _index.image else {
+        
+        if index?.image != nil {
+            if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "showImage") as? ShowImageViewController {
+                viewController.viewModel = showImageOnlyModel(value: _index)
+                if let navigator = navigationController {
+                    navigator.pushViewController(viewController, animated: true)
+                }
+            }
+        } else {
             if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
                 viewController.index = DetailViewModel(value: _index, indexPath: indexPath.row)
                 selectedIndexPath = indexPath
@@ -114,13 +122,6 @@ extension TodayViewController: UITableViewDelegate, UITableViewDataSource {
                 if let navigator = navigationController {
                     navigator.pushViewController(viewController, animated: true)
                 }
-            }
-            return
-        }
-        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "showImage") as? ShowImageViewController {
-            viewController.image = imageCheck
-            if let navigator = navigationController {
-                navigator.pushViewController(viewController, animated: true)
             }
         }
     }

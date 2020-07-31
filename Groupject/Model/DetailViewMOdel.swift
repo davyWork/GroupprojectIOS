@@ -30,4 +30,3 @@ class DetailViewModel {
         self.image = value.image
     }
 }
-

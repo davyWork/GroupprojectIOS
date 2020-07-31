@@ -19,6 +19,10 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var filed4: UITextField!
     @IBOutlet weak var logo: UIImageView!
     
+    var seconds = 60
+    var timer = Timer()
+    var isTimerRunning = false
+    
     var descriptionValue: String?
     var date: String?
     var hours: String?
@@ -80,6 +84,10 @@ class DetailViewController: UIViewController {
             editButton.isHidden = false
         default: break
         }
+        
+        if isTimerRunning == false {
+            runTimer()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -92,6 +100,11 @@ class DetailViewController: UIViewController {
                 Model.sharedInstance.overrideValue(data, index: index)
             }
         }
+        
+        timer.invalidate()
+        seconds = 60    //Here we manually enter the restarting point for the seconds, but it would be wiser to make this a variable or constant.
+        timeLimit.text = "\(seconds)"
+        isTimerRunning = false
     }
     
     func textFieldEditing(_ value: Bool?) {
@@ -158,5 +171,48 @@ extension DetailViewController: UITextFieldDelegate, UITextViewDelegate {
             return
         }
         descriptionValue = value
+    }
+}
+
+// MARK: Handle timer
+extension DetailViewController {
+    func runTimer() {
+        //first set the appropriate number of seconds according to the object
+        seconds = Int((index!.timeLimit ?? 0) * 60) //get the number of seconds
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(DetailViewController.updateTimer)), userInfo: nil, repeats: true)
+    }
+    
+    @objc func updateTimer() {
+        if seconds < 1 {
+            timer.invalidate()
+            timeLimit.textColor = .red
+            DispatchQueue.main.async {
+                self.alertView("Time is Up", title: "Cancel")
+            }
+        } else {
+            seconds -= 1     //decrement(count down)the seconds
+            timeLimit.text = timeString(time: TimeInterval(seconds)) //update the label
+        }
+    }
+   
+    func timeString(time:TimeInterval) -> String {
+        let hours = Int(time) / 3600
+        let minutes = Int(time) / 60 % 60
+        let seconds = Int(time) % 60
+        
+        return String(format:"%02i:%02i:%02i", hours, minutes, seconds)
+    }
+    
+    /// Description function to show alert
+    ///
+    /// - Parameter: - no param
+    func alertView(_ message: String, title: String) {
+        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: title, style: .default, handler: { (alert: UIAlertAction!) in
+        })
+        alertController.addAction(okAction)
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 }

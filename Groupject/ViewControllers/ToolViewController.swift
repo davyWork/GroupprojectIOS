@@ -84,21 +84,21 @@ extension ToolViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        let index = Model.sharedInstance.announcementsArray[indexPath.row]
-        guard let imageCheck = index.image else {
-            if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
-                viewController.index = DetailViewModel(value: index, indexPath: indexPath.row)
-                selectedIndexPath = indexPath
-                viewController.origin = .tool
+       if index.image != nil {
+            if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "showImage") as? ShowImageViewController {
+                viewController.viewModel = showImageOnlyModel(value: index)
                 if let navigator = navigationController {
                     navigator.pushViewController(viewController, animated: true)
                 }
             }
-            return
-        }
-        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "showImage") as? ShowImageViewController {
-            viewController.image = imageCheck
-            if let navigator = navigationController {
-                navigator.pushViewController(viewController, animated: true)
+        } else {
+            if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
+                viewController.index = DetailViewModel(value: index, indexPath: indexPath.row)
+                selectedIndexPath = indexPath
+                viewController.origin = .today
+                if let navigator = navigationController {
+                    navigator.pushViewController(viewController, animated: true)
+                }
             }
         }
     }

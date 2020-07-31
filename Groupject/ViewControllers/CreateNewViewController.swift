@@ -57,14 +57,14 @@ class CreateNewViewController: UIViewController {
     
     func handleData() {
         //case saving only title and image
-        if let _titleValue = titleValue.text,
+        if let _titleValue = titleValue.text, !_titleValue.isEmpty,
             let image = imageViewDoc.image, date.text == nil,
+             let announcer = announcer.text,  !announcer.isEmpty,
         descriptionValue.text == nil, location.text == nil,
-            contactPerson.text == nil, announcer.text == nil, timeLimit.text == nil {
+            contactPerson.text == nil, timeLimit.text == nil {
             
-            
-        let data = Model.Announcement.init(title: _titleValue, description: nil, date: nil, location: nil, contactPerson: nil, announcer: nil, timeLimit: nil, category: nil, hours: nil, image: image)
-            
+        let data = Model.Announcement.init(title: _titleValue, description: nil, date: nil, location: nil, contactPerson: nil, announcer: announcer, timeLimit: nil, category: nil, hours: nil, image: image)
+        
             //save object
             Model.sharedInstance.addNew(data: data)
             emptyState()
@@ -106,7 +106,6 @@ class CreateNewViewController: UIViewController {
         default: break
         }
     }
-    
     
     @IBAction func cameraAction(_ sender: UIButton) {
         imagePicker =  UIImagePickerController()
@@ -231,5 +230,6 @@ extension CreateNewViewController: UINavigationControllerDelegate, UIImagePicker
         self.view.endEditing(true)
         return true
     }
+    
 }
 
