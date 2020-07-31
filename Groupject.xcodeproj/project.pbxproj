@@ -12,6 +12,8 @@
 		6952FB5F24CE198900BE9764 /* DetailViewMOdel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6952FB5E24CE198900BE9764 /* DetailViewMOdel.swift */; };
 		6952FB6124CE3A1B00BE9764 /* CreateNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6952FB6024CE3A1B00BE9764 /* CreateNewViewController.swift */; };
 		696A3D6024D263C400CCD635 /* ShowImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696A3D5F24D263C400CCD635 /* ShowImageViewController.swift */; };
+		696A3D6724D3F8D600CCD635 /* CalendarVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696A3D6624D3F8D600CCD635 /* CalendarVars.swift */; };
+		696A3D6924D3F8DB00CCD635 /* DateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696A3D6824D3F8DB00CCD635 /* DateCollectionViewCell.swift */; };
 		69ACB59024C4D85A00667A9E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69ACB58F24C4D85A00667A9E /* AppDelegate.swift */; };
 		69ACB59224C4D85A00667A9E /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69ACB59124C4D85A00667A9E /* TodayViewController.swift */; };
 		69ACB59524C4D85A00667A9E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69ACB59324C4D85A00667A9E /* Main.storyboard */; };
@@ -48,6 +50,8 @@
 		6952FB5E24CE198900BE9764 /* DetailViewMOdel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewMOdel.swift; sourceTree = "<group>"; };
 		6952FB6024CE3A1B00BE9764 /* CreateNewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewViewController.swift; sourceTree = "<group>"; };
 		696A3D5F24D263C400CCD635 /* ShowImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowImageViewController.swift; sourceTree = "<group>"; };
+		696A3D6624D3F8D600CCD635 /* CalendarVars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarVars.swift; sourceTree = "<group>"; };
+		696A3D6824D3F8DB00CCD635 /* DateCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCollectionViewCell.swift; sourceTree = "<group>"; };
 		69ACB58C24C4D85A00667A9E /* Groupject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Groupject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69ACB58F24C4D85A00667A9E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69ACB59124C4D85A00667A9E /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -103,9 +107,11 @@
 		696A3D6224D26A9500CCD635 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				696A3D6624D3F8D600CCD635 /* CalendarVars.swift */,
 				69ACB59124C4D85A00667A9E /* TodayViewController.swift */,
 				69ACB5BD24C4DB7300667A9E /* CalendarViewController.swift */,
 				69ACB5BF24C4DB7E00667A9E /* ToolViewController.swift */,
+				696A3D6824D3F8DB00CCD635 /* DateCollectionViewCell.swift */,
 				69ACB5C124C4DE2600667A9E /* DetailViewController.swift */,
 				6952FB6024CE3A1B00BE9764 /* CreateNewViewController.swift */,
 				696A3D5F24D263C400CCD635 /* ShowImageViewController.swift */,
@@ -312,11 +318,13 @@
 				69ACB5C224C4DE2600667A9E /* DetailViewController.swift in Sources */,
 				69ACB5C024C4DB7E00667A9E /* ToolViewController.swift in Sources */,
 				69ACB5BE24C4DB7300667A9E /* CalendarViewController.swift in Sources */,
+				696A3D6924D3F8DB00CCD635 /* DateCollectionViewCell.swift in Sources */,
 				A862D8B324C8D9D400B14054 /* Model.swift in Sources */,
 				6952FB6124CE3A1B00BE9764 /* CreateNewViewController.swift in Sources */,
 				69ACB59224C4D85A00667A9E /* TodayViewController.swift in Sources */,
 				69ACB59024C4D85A00667A9E /* AppDelegate.swift in Sources */,
 				6952FB5F24CE198900BE9764 /* DetailViewMOdel.swift in Sources */,
+				696A3D6724D3F8D600CCD635 /* CalendarVars.swift in Sources */,
 				696A3D6024D263C400CCD635 /* ShowImageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
