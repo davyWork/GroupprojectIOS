@@ -253,30 +253,26 @@ extension Model {
         }
     }
     
-    //TODO not working
     //modified existing value
     //handle nil cases
-//    func overrideValue(
-//        description: String?,
-//        date: String?,
-//        hours: String?,
-//        location: String?,
-//        contactPerson: String?,
-//        timeLimit: Double?,
-//        index: Int?) {
-//
-//        if let _index = index {
-//            //check if the value wasnt modifed
-//
-//            if description == nil {
-//
-//            }
-//            let value = announcementsArray[_index]
-//            announcementsArray[_index] = Announcement(title: value.title, description: description ?? "", date: date, location: location, contactPerson: contactPerson, announcer: value.announcer, timeLimit: timeLimit ?? 0, category: value.category, hours: hours ?? "")
-//        }
-//    }
+    func overrideValue(_ data: Announcement, index: Int?) {
+        if let _index = index {
+            //check if the value wasnt modifed
+            let value = announcementsArray[_index]
+            if let description  = data.description,
+                !description.isEmpty,
+                let date = data.date,
+                !date.isEmpty,
+                let location = data.location,
+                !location.isEmpty, let hours = data.hours,
+                !hours.isEmpty,
+                let contactPerson = data.contactPerson,
+                !contactPerson.isEmpty {
+                announcementsArray[_index] = Announcement(title: value.title, description: description, date: date, location: location, contactPerson: contactPerson, announcer: value.announcer, timeLimit: value.timeLimit, category: value.category, hours: hours, image:value.image)
+             }
+            }
+    }
     
-    //TODO
     func addNew(data: Announcement) {
         announcementsArray.append(data)
     }

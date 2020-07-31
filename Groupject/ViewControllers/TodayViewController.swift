@@ -93,28 +93,6 @@ extension TodayViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            switch segementController.selectedSegmentIndex {
-//            case 0:
-//                //delete in database
-//                annoucement?.remove(at: indexPath.row)
-//                let item = annoucement?[indexPath.row]
-//                Model.sharedInstance.delele(item: item)
-//                //delete in the tableView
-//                tableView.deleteRows(at: [indexPath], with: .fade)
-//            case 1:
-//                //delete in database
-//                essentials?.remove(at: indexPath.row)
-//                let item = essentials?[indexPath.row]
-//                Model.sharedInstance.delele(item: item)
-//                //delete in the tableView
-//                tableView.deleteRows(at: [indexPath], with: .fade)
-//            default: break
-//            }
-//        }
-//    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var index: Model.Announcement?
         switch segementController.selectedSegmentIndex {
@@ -132,6 +110,7 @@ extension TodayViewController: UITableViewDelegate, UITableViewDataSource {
             if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
                 viewController.index = DetailViewModel(value: _index, indexPath: indexPath.row)
                 selectedIndexPath = indexPath
+                viewController.origin = .today
                 if let navigator = navigationController {
                     navigator.pushViewController(viewController, animated: true)
                 }

@@ -8,6 +8,12 @@
 
 import UIKit
 
+enum Origin {
+    case today
+    case tool
+    case none
+}
+
 class ToolViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var createNewqButton: UIButton!
@@ -82,6 +88,7 @@ extension ToolViewController: UITableViewDataSource, UITableViewDelegate {
             if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
                 viewController.index = DetailViewModel(value: index, indexPath: indexPath.row)
                 selectedIndexPath = indexPath
+                viewController.origin = .tool
                 if let navigator = navigationController {
                     navigator.pushViewController(viewController, animated: true)
                 }

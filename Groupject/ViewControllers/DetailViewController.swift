@@ -28,6 +28,7 @@ class DetailViewController: UIViewController {
     
     var fields = [UITextField]()
     var instance: Model.Announcement?
+    var origin = Origin.none
     
     //check the state of Editing
     var isEditingFiled: Bool? {
@@ -71,6 +72,14 @@ class DetailViewController: UIViewController {
         isEditingFiled = false
         textFieldEditing(isEditingFiled)
         displayData()
+        
+        switch origin {
+        case .today:
+            editButton.isHidden = true
+        case .tool:
+            editButton.isHidden = false
+        default: break
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -78,7 +87,9 @@ class DetailViewController: UIViewController {
         //handle modifying record
         if isEditingFiled == true {
             if let index = index?.index {
-//                Model.sharedInstance.overrideValue(description: descriptionValue, date: date, hours: hours, location: location, contactPerson: contactPerson, timeLimit: timeLimitValue, index: index)
+                let data = Model.Announcement.init(title: nil, description: field1.text, date: filed2.text, location: filed4.text, contactPerson: filed5.text, announcer: nil, timeLimit: nil, category: nil, hours: filed3.text, image:nil)
+                //save object
+                Model.sharedInstance.overrideValue(data, index: index)
             }
         }
     }
