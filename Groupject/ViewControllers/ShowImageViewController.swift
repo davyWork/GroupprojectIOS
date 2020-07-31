@@ -12,7 +12,6 @@ class ShowImageViewController: UIViewController {
     var image: UIImage?
     @IBOutlet weak var imagevIewA: UIImageView!
     @IBOutlet weak var titleValue: UILabel!
-    @IBOutlet weak var announcer: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     
     var viewModel: showImageOnlyModel?
@@ -23,7 +22,6 @@ class ShowImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Show Image"
-        announcer.text = viewModel?.announcer
         titleValue.text = viewModel?.titleValue
         imagevIewA.image = viewModel?.getimage()
         timerLabel.text = "\(viewModel?.getTimer() ?? 1.0)"

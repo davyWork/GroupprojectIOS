@@ -341,10 +341,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ero-oD-oE5">
-                                <rect key="frame" x="0.0" y="211" width="414" height="651"/>
+                                <rect key="frame" x="0.0" y="172" width="414" height="690"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="oQ3-1f-4Lm">
-                                <rect key="frame" x="20" y="83" width="142" height="99"/>
+                                <rect key="frame" x="20" y="83" width="142" height="60"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eSg-0U-Kt7">
                                         <rect key="frame" x="0.0" y="0.0" width="142" height="21"/>
@@ -355,17 +355,8 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Announcer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xhw-gb-z2A">
-                                        <rect key="frame" x="0.0" y="39" width="142" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="1re-rF-rRp"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8MP-bM-6fN">
-                                        <rect key="frame" x="0.0" y="78" width="142" height="21"/>
+                                        <rect key="frame" x="0.0" y="39" width="142" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="ebT-JX-uoS"/>
                                         </constraints>
@@ -389,7 +380,6 @@
                         <viewLayoutGuide key="safeArea" id="ET9-1Z-AUE"/>
                     </view>
                     <connections>
-                        <outlet property="announcer" destination="Xhw-gb-z2A" id="Tac-Sy-zjm"/>
                         <outlet property="imagevIewA" destination="Ero-oD-oE5" id="V03-h9-ULB"/>
                         <outlet property="timerLabel" destination="8MP-bM-6fN" id="eHP-Ff-sRr"/>
                         <outlet property="titleValue" destination="eSg-0U-Kt7" id="rza-jn-9cC"/>
@@ -489,7 +479,7 @@
                                 </subviews>
                             </stackView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6fy-dd-5AJ">
-                                <rect key="frame" x="145.66666666666663" y="699" width="122.99999999999997" height="86"/>
+                                <rect key="frame" x="145.66666666666666" y="699" width="122.99999999999997" height="86"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="86" id="Vfg-KJ-Gws"/>
                                     <constraint firstAttribute="width" constant="123" id="vS3-HX-ItI"/>
@@ -576,7 +566,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Calendar" id="lpz-K5-Ij0" customClass="DateCollectionViewCell" customModule="Calendar2" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Calendar" id="lpz-K5-Ij0" customClass="DateCollectionViewCell" customModule="Groupject" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="37" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">

@@ -13,13 +13,11 @@ import UIKit
 // UIKit because the view MOdel is a representation of the view
 class showImageOnlyModel {
     var titleValue: String?
-    var announcer: String?
     var image: UIImage?
     var timerLabel: Double?
     
     init(value: Model.Announcement) {
         self.titleValue = value.title
-        self.announcer  = value.announcer
         self.image  = value.image
         self.timerLabel = value.timeLimit
     }
@@ -27,11 +25,6 @@ class showImageOnlyModel {
     //getTitleValue
     func getTitleValue() -> String{
         return titleValue ?? ""
-    }
-    
-    //getAnnouncer
-    func getAnnouncer() -> String {
-        return announcer ?? ""
     }
     
     //getimage

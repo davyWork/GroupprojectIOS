@@ -83,12 +83,12 @@ class CreateNewViewController: UIViewController {
                 let _announcer = announcer.text,
                 !_announcer.isEmpty,
                 let _timeLimit = timeLimit.text,
-                !_timeLimit.isEmpty else {
+                !_timeLimit.isEmpty, let image =  imageViewDoc.image else {
                     return
             }
             
             //create object
-            let data = Model.Announcement.init(title: _titleValue, description: _descriptionValue, date: _date, location: _location, contactPerson: _contactPerson, announcer: _announcer, timeLimit: Double(_timeLimit), category: selectedCategory, hours: nil, image: imageViewDoc.image ?? UIImage())
+            let data = Model.Announcement.init(title: _titleValue, description: _descriptionValue, date: _date, location: _location, contactPerson: _contactPerson, announcer: _announcer, timeLimit: Double(_timeLimit), category: selectedCategory, hours: nil, image: image)
             
             //save object
             Model.sharedInstance.addNew(data: data)
