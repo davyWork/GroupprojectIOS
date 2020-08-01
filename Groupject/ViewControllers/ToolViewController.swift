@@ -1,3 +1,14 @@
+//  PROGRAMMER: Davy Mbaku Ngoma, Alexandra Daglio, Rebecca Dupuis
+
+//  PANTHERID: 6043597, 2254610, 6056552
+
+//  CLASS: COP 465501 online
+
+//  INSTRUCTOR: Steve Luis ECS 282
+
+//  ASSIGNMENT: Group Project- Deliverable 2
+
+//  DUE: Saturday 08/01/2020
 //
 //  ToolViewController.swift
 //  Groupject
@@ -102,7 +113,7 @@ extension ToolViewController: UITableViewDataSource, UITableViewDelegate {
             if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
                 viewController.index = DetailViewModel(value: index, indexPath: indexPath.row)
                 selectedIndexPath = indexPath
-                viewController.origin = .today
+                viewController.origin = .tool
                 if let navigator = navigationController {
                     navigator.pushViewController(viewController, animated: true)
                 }

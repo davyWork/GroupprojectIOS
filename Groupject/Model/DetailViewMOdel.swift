@@ -1,3 +1,14 @@
+//  PROGRAMMER: Davy Mbaku Ngoma, Alexandra Daglio, Rebecca Dupuis
+
+//  PANTHERID: 6043597, 2254610, 6056552
+
+//  CLASS: COP 465501 online
+
+//  INSTRUCTOR: Steve Luis ECS 282
+
+//  ASSIGNMENT: Group Project- Deliverable 2
+
+//  DUE: Saturday 08/01/2020
 //
 //  DetailViewMOdel.swift
 //  Groupject
@@ -18,6 +29,7 @@ class DetailViewModel {
     var filed4: String?
     var index: Int?
     var image: UIImage?
+    var title: String?
     
     init(value: Model.Announcement, indexPath: Int) {
         self.timeLimit = value.timeLimit
@@ -28,5 +40,6 @@ class DetailViewModel {
         self.filed4  = value.contactPerson
         self.index = indexPath
         self.image = value.image
+        self.title = value.title
     }
 }
