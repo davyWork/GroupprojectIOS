@@ -11,6 +11,7 @@ import UIKit
 class TodayViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segementController: UISegmentedControl!
+    var index: Model.Announcement?
     var selectedIndexPath: IndexPath?
     enum Sections: Int, CaseIterable {
         case Annoucement = 0
@@ -34,7 +35,6 @@ class TodayViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         let nib = UINib(nibName: "ReuseCell", bundle: nil)
-        segementController.selectedSegmentIndex = 0
         tableView.register(nib, forCellReuseIdentifier: "cell")
     }
     
@@ -42,8 +42,13 @@ class TodayViewController: UIViewController {
         super.viewWillAppear(animated)
         tableView.reloadData()
         tableView.tableFooterView = UIView()
-        if segementController.selectedSegmentIndex == 0 {
+        switch segementController.selectedSegmentIndex {
+        case 0:
             annoucement = Model.sharedInstance.dataByCategories(category: .annoucement)
+        case 1:
+            essentials = Model.sharedInstance.dataByCategories(category: .essentials)
+        default:
+            break;
         }
     }
     
@@ -94,7 +99,6 @@ extension TodayViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var index: Model.Announcement?
         switch segementController.selectedSegmentIndex {
         case 0:
             index = annoucement?[indexPath.row]
@@ -126,5 +130,4 @@ extension TodayViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 }
-
 

@@ -20,7 +20,8 @@ class CreateNewViewController: UIViewController {
     @IBOutlet weak var contactPerson: UITextField!
     @IBOutlet weak var announcer: UITextField!
     @IBOutlet weak var timeLimit: UITextField!
-    var selectedCategory: Model.categories?
+    //by default
+    var selectedCategory = Model.categories.annoucement
     
     var imagePicker: UIImagePickerController?
     
@@ -29,6 +30,9 @@ class CreateNewViewController: UIViewController {
         self.title = "Create New Announcement"
         buttonSetUp()
         setTextFieldDelegate()
+        imageViewDoc.layer.cornerRadius = 2
+        imageViewDoc.layer.borderColor = UIColor.red.cgColor
+        imageViewDoc.layer.borderWidth = 4
         // Do any additional setup after loading the view.
     }
     
@@ -56,7 +60,7 @@ class CreateNewViewController: UIViewController {
     }
     
     func handleData() {
-        //case saving only title and image
+        //save case one 3 field
         if let _titleValue = titleValue.text, !_titleValue.isEmpty,
             let image = imageViewDoc.image, date.text == nil,
              let announcer = announcer.text,  !announcer.isEmpty,
@@ -68,8 +72,29 @@ class CreateNewViewController: UIViewController {
             //save object
             Model.sharedInstance.addNew(data: data)
             emptyState()
-        } else {
-            //get input non null or empty to save
+        } else if let _titleValue = titleValue.text,
+                !_titleValue.isEmpty,
+                let _date = date.text,
+                !_date.isEmpty,
+                let _descriptionValue = descriptionValue.text,
+                !_descriptionValue.isEmpty,
+                let _location = location.text,
+                !_location.isEmpty,
+                let _contactPerson = contactPerson.text,
+                !_contactPerson.isEmpty,
+                let _announcer = announcer.text,
+                !_announcer.isEmpty,
+                let _timeLimit = timeLimit.text,
+                !_timeLimit.isEmpty, let image =  imageViewDoc.image {
+            //create object
+            let data = Model.Announcement.init(title: _titleValue, description: _descriptionValue, date: _date, location: _location, contactPerson: _contactPerson, announcer: _announcer, timeLimit: Double(_timeLimit), category: selectedCategory, hours: nil, image: image)
+            
+            //save object
+            Model.sharedInstance.addNew(data: data)
+            emptyState()
+        }
+        else {
+            //save case 3
             guard let _titleValue = titleValue.text,
                 !_titleValue.isEmpty,
                 let _date = date.text,
@@ -83,12 +108,12 @@ class CreateNewViewController: UIViewController {
                 let _announcer = announcer.text,
                 !_announcer.isEmpty,
                 let _timeLimit = timeLimit.text,
-                !_timeLimit.isEmpty, let image =  imageViewDoc.image else {
+                !_timeLimit.isEmpty, imageViewDoc.image == nil else {
                     return
             }
             
             //create object
-            let data = Model.Announcement.init(title: _titleValue, description: _descriptionValue, date: _date, location: _location, contactPerson: _contactPerson, announcer: _announcer, timeLimit: Double(_timeLimit), category: selectedCategory, hours: nil, image: image)
+            let data = Model.Announcement.init(title: _titleValue, description: _descriptionValue, date: _date, location: _location, contactPerson: _contactPerson, announcer: _announcer, timeLimit: Double(_timeLimit), category: selectedCategory, hours: nil, image: nil)
             
             //save object
             Model.sharedInstance.addNew(data: data)
@@ -230,6 +255,5 @@ extension CreateNewViewController: UINavigationControllerDelegate, UIImagePicker
         self.view.endEditing(true)
         return true
     }
-    
 }
 

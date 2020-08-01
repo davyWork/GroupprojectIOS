@@ -29,6 +29,7 @@ class ToolViewController: UIViewController {
         // Do any additional setup after loading the view.
         let nib = UINib(nibName: "ReuseCell", bundle: nil)
         tableVIew.register(nib, forCellReuseIdentifier: "cell")
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,6 +42,7 @@ class ToolViewController: UIViewController {
         Model.sharedInstance.sortData(by: .filter)
         searchBar.resignFirstResponder()
         tableVIew.reloadData()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -48,6 +50,7 @@ class ToolViewController: UIViewController {
         if let selectedIndexPath = selectedIndexPath {
             tableVIew.deselectRow(at: selectedIndexPath, animated: true)
         }
+        searchBar.resignFirstResponder()
     }
     
     @IBAction func createNewButton(_ sender: UIButton) {
@@ -134,4 +137,3 @@ extension ToolViewController: UISearchBarDelegate {
         super.touchesBegan(touches, with: event)
     }
 }
-
