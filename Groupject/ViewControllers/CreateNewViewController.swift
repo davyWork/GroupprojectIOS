@@ -33,6 +33,9 @@ class CreateNewViewController: UIViewController {
         imageViewDoc.layer.cornerRadius = 2
         imageViewDoc.layer.borderColor = UIColor.red.cgColor
         imageViewDoc.layer.borderWidth = 4
+        descriptionValue.layer.cornerRadius = 2
+        descriptionValue.layer.borderColor = UIColor.lightGray.cgColor
+        descriptionValue.layer.borderWidth = 2
         // Do any additional setup after loading the view.
     }
     
@@ -173,7 +176,9 @@ extension CreateNewViewController: UINavigationControllerDelegate, UIImagePicker
     //MARK: - Done image capture here
     private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
-            imageViewDoc?.image = image
+            DispatchQueue.main.async {
+                self.imageViewDoc?.image = image
+            }
             dismiss(animated: true, completion: nil)
         }
     }

@@ -17,13 +17,14 @@ class TodayViewController: UIViewController {
         case Annoucement = 0
         case essentials = 1
     }
-    
+    //array of essentials
     var essentials: [Model.Announcement]? {
         didSet {
             tableView.reloadData()
         }
     }
     
+    //array annoucement
     var annoucement: [Model.Announcement]? {
         didSet {
             tableView.reloadData()

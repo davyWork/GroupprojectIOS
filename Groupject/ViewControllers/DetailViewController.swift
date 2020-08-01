@@ -46,6 +46,7 @@ class DetailViewController: UIViewController {
             }
         }
     }
+    //view Model
     var index: DetailViewModel?
     
     override func viewDidLoad() {
@@ -147,6 +148,7 @@ class DetailViewController: UIViewController {
     }
 }
 
+// MARK - Handle UITextFieldDelegate, UITextViewDelegate
 extension DetailViewController: UITextFieldDelegate, UITextViewDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
@@ -216,5 +218,4 @@ extension DetailViewController {
             self.present(alertController, animated: true, completion: nil)
         }
     }
-    
 }

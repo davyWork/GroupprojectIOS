@@ -8,6 +8,7 @@
 
 import UIKit
 
+//control button to show
 enum Origin {
     case today
     case tool
@@ -29,7 +30,6 @@ class ToolViewController: UIViewController {
         // Do any additional setup after loading the view.
         let nib = UINib(nibName: "ReuseCell", bundle: nil)
         tableVIew.register(nib, forCellReuseIdentifier: "cell")
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,6 +47,7 @@ class ToolViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        //deselect row
         if let selectedIndexPath = selectedIndexPath {
             tableVIew.deselectRow(at: selectedIndexPath, animated: true)
         }
@@ -62,7 +63,7 @@ class ToolViewController: UIViewController {
     }
 }
 
-
+// MARK - Handle UITableViewDataSource, UITableViewDelegate
 extension ToolViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if Model.sharedInstance.isFilter == true && searchBar.text != "" {
@@ -86,7 +87,10 @@ extension ToolViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //get item
        let index = Model.sharedInstance.announcementsArray[indexPath.row]
+       //if picture exist show show imageView
+       // if not picture show detail view
        if index.image != nil {
             if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "showImage") as? ShowImageViewController {
                 viewController.viewModel = showImageOnlyModel(value: index)
@@ -107,6 +111,7 @@ extension ToolViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+// MARK - Handle UISearchBarDelegate
 extension ToolViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let textFieldInfo = searchBar.text,  !textFieldInfo.isEmpty, textFieldInfo != "" else {

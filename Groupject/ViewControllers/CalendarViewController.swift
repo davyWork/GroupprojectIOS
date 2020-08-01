@@ -11,7 +11,7 @@ import UIKit
 
 class CalendarViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    
+    @IBOutlet weak var showData: UILabel!
     @IBOutlet weak var Calendar: UICollectionView!
     @IBOutlet weak var MonthLabel: UILabel!
     
@@ -219,6 +219,11 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
             
         }
         return cell
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        showData.text = "No Annoucemnent Added to Calendar"
     }
 }
 
