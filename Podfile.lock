@@ -1,0 +1,25 @@
+PODS:
+  - FSCalendar (2.8.1)
+  - IQKeyboardManagerSwift (6.5.2)
+  - KDCalendar (1.6.5)
+
+DEPENDENCIES:
+  - FSCalendar
+  - IQKeyboardManagerSwift
+  - KDCalendar (~> 1.6.5)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - IQKeyboardManagerSwift
+    - KDCalendar
+  trunk:
+    - FSCalendar
+
+SPEC CHECKSUMS:
+  FSCalendar: 5245140456fcbcac5824c203b98bd8068bdfee1a
+  IQKeyboardManagerSwift: c75366f1f19590e8caeae45fcd5815c9289d6099
+  KDCalendar: 15e74f37bd3d206bf7549c594fd08e0347c276f4
+
+PODFILE CHECKSUM: 022023b19d411285c5b394e387ee71364e50fa57
+
+COCOAPODS: 1.10.0.beta.1

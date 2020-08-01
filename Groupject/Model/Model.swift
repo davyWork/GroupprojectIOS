@@ -10,25 +10,35 @@ import Foundation
 import UIKit
 
 class Model {
-
+    //sort type
+    enum SortByTypes {
+        case filter
+        case display
+    }
+    
+    //category type
+    enum categories {
+        case annoucement
+        case essentials
+    }
+    
     struct Announcement {
-        var title: String
-        var description: String
+        var title: String?
+        var description: String?
         var date: String?
         var location: String?
         var contactPerson: String?
         var announcer: String?
-        var timeLimit: Double
-        var category: String //categories consist of Announcement or Essential
+        var timeLimit: Double?
+        var category: categories? //categories consist of Announcement or Essential
+        var hours: String?
+        var image: UIImage?
     }
     
-    
     var arrayIndex: Int = 0
-    
-    
+    var filterData = [Model.Announcement]()
+    var isFilter: Bool?
     static let sharedInstance = Model() //obtain reference to the singleton
-    
-    
     private init () {
         //prevent unauthorized initialization & prevents overriding at init
     }
@@ -36,8 +46,8 @@ class Model {
     
     
     //create the default announcements in the array:
-    private var announcementsArray: [Announcement] =
-        [Announcement(title: "12 Steps",
+    var announcementsArray: [Announcement]  = [
+        Announcement(title: "12 Steps",
                       description: """
             1. We admitted we were powerless over our addictions and compulsive behaviors, that our lives had become unmanageable.
             I know that nothing good lives in me, that is, in my sinful nature. For I have the desire to do what is good, but I cannot carry it out. Romans 7:18 NIV
@@ -81,7 +91,9 @@ class Model {
                       contactPerson: nil,
                       announcer: "Roxy",
                       timeLimit: 5.00,
-                      category: "Essential"),
+                      category: categories.essentials,
+                      hours: "08AM - 06PM",
+                      image: nil),
          
          Announcement(title: "8 Principles",
             description: """
@@ -113,7 +125,9 @@ class Model {
             contactPerson: nil,
             announcer: "Mike",
             timeLimit: 5.00,
-            category: "Essential"),
+            category: categories.essentials,
+            hours: "08AM - 06PM",
+            image: nil),
          
          Announcement(title: "Serenity Prayer",
                       description: """
@@ -139,7 +153,9 @@ class Model {
                       contactPerson: nil,
                       announcer: "Vanessa",
                       timeLimit: 5.00,
-                      category: "Essential"),
+                      category: categories.essentials,
+                      hours: "08AM - 06PM",
+                      image: nil),
          
          Announcement(title: "Small Group Guidelines",
                       description: """
@@ -171,7 +187,9 @@ class Model {
                       contactPerson: nil,
                       announcer: "Phil",
                       timeLimit: 5.00,
-                      category: "Essential"),
+                      category: categories.essentials,
+                      hours: "08AM - 06PM",
+                      image: nil),
          
          Announcement(title: "12 Step Class Signups",
                       description: "Sign up for the 12 step classes. Starting February 4th, 2020. This is a great opportuinty to dig deeper into your recovery and find the root issues that are making life unmanagable for you. The classes follow 4 workbooks as a guide. You can purchase these workbooks as a set for $20, which you can write in and use over and over again, should you choose to retake the class in the future.",
@@ -180,7 +198,9 @@ class Model {
                       contactPerson: "Jackie",
                       announcer: "Jackie",
                       timeLimit: 5.00,
-                      category: "Announcement"),
+                      category: categories.annoucement,
+                      hours: "08AM - 06PM",
+                      image: nil),
          
          Announcement(title: "CR Thanksgiving",
                       description: "Celebrate Recovery invites you and your immediate family to break bread with us and to celebrate the goodness of God at our annual Thanksgiving Fellowship Dinner. We'll provide the traditional turkey fixins' and fun. You provide the dessert, bottled water or canned sodas.",
@@ -192,7 +212,9 @@ class Model {
                       contactPerson: "Jackie",
                       announcer: "Marie",
                       timeLimit: 5.00,
-                      category: "Announcement"),
+                      category: categories.annoucement,
+                      hours: "08AM - 06PM",
+                      image: nil),
          
          Announcement(title: "Volunteers Needed",
                       description: "Volunteers needed to chaperone grade school-aged children to the Miami Seaquarium.",
@@ -204,33 +226,79 @@ class Model {
                       contactPerson: "Rosie",
                       announcer: "Rosie",
                       timeLimit: 5.00,
-                      category: "Announcement"),
+                      category: categories.annoucement,
+                      hours: "08AM - 06PM",
+                      image: nil)
     ] //end of array sample announcements
+}
+
+extension Model {
+    //handle sort type
+    func sortData(by: SortByTypes) {
+        switch by {
+        case .display:
+            sortArray(data: announcementsArray)
+        case .filter:
+            sortArray(data: filterData)
+        }
+    }
     
-    
-    
-    //when displaying the announcements in the Announcement Library, they should be sorted first
-    private func sortArray() {
+    //generic function to sort
+    func sortArray<T>(data: [T]) {
         //sort all the entries
-        announcementsArray.sort{
-            $0.title < $1.title
+        if !announcementsArray.isEmpty {
+            announcementsArray.sort{
+                $0.title ?? "" < $1.title ?? ""
+            }
         }
     }
     
-    
-    //find the index of the announcement title the user is searching for
-    func searchByTitle(searchingForTitle: String) -> Int{
-            if let announcementIndex = announcementsArray.index(where: {$0.title == searchingForTitle}) { //get index of array entry that matches name of user-entered entry
-                arrayIndex = announcementIndex //if found, return the index where title was found
-            } else { //not found
-                arrayIndex = -1
-        }
-            return arrayIndex
+    //modified existing value
+    //handle nil cases
+    func overrideValue(_ data: Announcement, index: Int?) {
+        if let _index = index {
+            //check if the value wasnt modifed
+            let value = announcementsArray[_index]
+            if let description  = data.description,
+                !description.isEmpty,
+                let date = data.date,
+                !date.isEmpty,
+                let location = data.location,
+                !location.isEmpty, let hours = data.hours,
+                !hours.isEmpty,
+                let contactPerson = data.contactPerson,
+                !contactPerson.isEmpty {
+                announcementsArray[_index] = Announcement(title: value.title, description: description, date: date, location: location, contactPerson: contactPerson, announcer: value.announcer, timeLimit: value.timeLimit, category: value.category, hours: hours, image:value.image)
+             }
+            }
     }
     
+    func addNew(data: Announcement) {
+        announcementsArray.append(data)
+    }
     
+    //return data by categories
+    func dataByCategories(category: categories) -> [Model.Announcement]? {
+        switch category {
+        case .annoucement:
+           return Model.sharedInstance.announcementsArray.filter {
+                $0.category == Model.categories.annoucement
+            }
+        case .essentials:
+            return Model.sharedInstance.announcementsArray.filter {
+                $0.category == Model.categories.essentials
+            }
+        }
+    }
     
-    //update an existing announcement after the user edits it
-    
-    
+    //find item
+    //remove at that index
+    func delele(item: Announcement?) {
+        guard let item = item else {
+            return
+        }
+        if let index = announcementsArray.firstIndex(where: { $0.title == item.title}) {
+            announcementsArray.remove(at: index)
+        }
+    }
 }
