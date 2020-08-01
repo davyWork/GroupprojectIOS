@@ -1,3 +1,14 @@
+//  PROGRAMMER: Davy Mbaku Ngoma, Alexandra Daglio, Rebecca Dupuis
+
+//  PANTHERID: 6043597, 2254610, 6056552
+
+//  CLASS: COP 465501 online
+
+//  INSTRUCTOR: Steve Luis ECS 282
+
+//  ASSIGNMENT: Group Project- Deliverable 2
+
+//  DUE: Saturday 08/01/2020
 //
 //  ShowImageViewController.swift
 //  Groupject
@@ -21,10 +32,12 @@ class ShowImageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Show Image"
-        titleValue.text = viewModel?.titleValue
+    
+        
+        
         imagevIewA.image = viewModel?.getimage()
         timerLabel.text = "\(viewModel?.getTimer() ?? 1.0)"
+        self.title = viewModel?.getTitleValue()
     }
     
     override func viewWillDisappear (_ animated: Bool) {

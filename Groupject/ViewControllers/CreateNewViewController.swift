@@ -1,3 +1,14 @@
+//  PROGRAMMER: Davy Mbaku Ngoma, Alexandra Daglio, Rebecca Dupuis
+
+//  PANTHERID: 6043597, 2254610,6056552
+
+//  CLASS: COP 465501 online
+
+//  INSTRUCTOR: Steve Luis ECS 282
+
+//  ASSIGNMENT: Group Project- Deliverable 2
+
+//  DUE: Saturday 08/01/2020
 //
 //  CreateNewViewController.swift
 //  Groupject
@@ -36,6 +47,8 @@ class CreateNewViewController: UIViewController {
         descriptionValue.layer.cornerRadius = 2
         descriptionValue.layer.borderColor = UIColor.lightGray.cgColor
         descriptionValue.layer.borderWidth = 2
+        
+        imageViewDoc.isUserInteractionEnabled = true
         // Do any additional setup after loading the view.
     }
     
@@ -89,6 +102,14 @@ class CreateNewViewController: UIViewController {
                 !_announcer.isEmpty,
                 let _timeLimit = timeLimit.text,
                 !_timeLimit.isEmpty, let image =  imageViewDoc.image {
+            //Check if timeLimit is number
+            let numberCharacters = NSCharacterSet.decimalDigits.inverted
+            if(_timeLimit.rangeOfCharacter(from: numberCharacters) != nil)
+            {
+                let alert = UIAlertController(title: "Alert", message: "Time Limit must be a number", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Return", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
             //create object
             let data = Model.Announcement.init(title: _titleValue, description: _descriptionValue, date: _date, location: _location, contactPerson: _contactPerson, announcer: _announcer, timeLimit: Double(_timeLimit), category: selectedCategory, hours: nil, image: image)
             
@@ -114,7 +135,13 @@ class CreateNewViewController: UIViewController {
                 !_timeLimit.isEmpty, imageViewDoc.image == nil else {
                     return
             }
-            
+            let numberCharacters = NSCharacterSet.decimalDigits.inverted
+            if(_timeLimit.rangeOfCharacter(from: numberCharacters) != nil)
+            {
+                let alert = UIAlertController(title: "Alert", message: "Time Limit must be a number", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Return", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
             //create object
             let data = Model.Announcement.init(title: _titleValue, description: _descriptionValue, date: _date, location: _location, contactPerson: _contactPerson, announcer: _announcer, timeLimit: Double(_timeLimit), category: selectedCategory, hours: nil, image: nil)
             
@@ -147,7 +174,10 @@ class CreateNewViewController: UIViewController {
             return
         }
         imagePicker?.sourceType = .camera
-        present(imagePicker ?? UIImagePickerController(), animated: true, completion: nil)
+        if let imagePicker = imagePicker{
+            present(imagePicker , animated: true, completion: nil)
+        }
+        
     }
     
     @IBAction func addAction(_ sender: UIButton) {
@@ -173,13 +203,15 @@ extension CreateNewViewController: UINavigationControllerDelegate, UIImagePicker
         dismiss(animated: true, completion: nil)
     }
     
+    
     //MARK: - Done image capture here
-    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        dismiss(animated: true, completion: nil)
         if let image = info[.originalImage] as? UIImage {
-            DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
                 self.imageViewDoc?.image = image
-            }
-            dismiss(animated: true, completion: nil)
+            })
+            
         }
     }
     
